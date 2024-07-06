@@ -2,6 +2,7 @@ package Principal;
 
 import Conversor.MetodosConversor;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PrincipalConversion {
@@ -27,62 +28,71 @@ public class PrincipalConversion {
                     9.-Dolar(USD) => Peso Chileno(CMF) \n
                     10.-Peso Chileno(CMF) => Dolar(USD) \n
                     """);
-            opcion = teclado.nextInt();
-            flag = 1;
-            switch (opcion){
-                case 1:
-                    monedaBase = "USD";
-                    monedaObjetivo = "MXN";
+
+            try{
+                opcion = teclado.nextInt();
+                flag = 1;
+                switch (opcion){
+                    case 1:
+                        monedaBase = "USD";
+                        monedaObjetivo = "MXN";
+                        break;
+                    case 2:
+                        monedaBase = "MXN";
+                        monedaObjetivo = "USD";
+                        break;
+                    case 3:
+                        monedaBase = "USD";
+                        monedaObjetivo = "BRL";
+                        break;
+                    case 4:
+                        monedaBase = "BRL";
+                        monedaObjetivo = "USD";
+                        break;
+                    case 5:
+                        monedaBase = "USD";
+                        monedaObjetivo = "COP";
+                        break;
+                    case 6:
+                        monedaBase = "COP";
+                        monedaObjetivo = "USD";
+                        break;
+                    case 7:
+                        monedaBase = "USD";
+                        monedaObjetivo = "ARS";
+                        break;
+                    case 8:
+                        monedaBase = "ARS";
+                        monedaObjetivo = "USD";
+                        break;
+                    case 9:
+                        monedaBase = "USD";
+                        monedaObjetivo = "CMF";
+                        break;
+                    case 10:
+                        monedaBase = "CMF";
+                        monedaObjetivo = "USD";
+                        break;
+                    default:
+                        System.out.println("Opcion invalida");
+                        flag = 0;
+                }
+                if(flag == 1){
+                    System.out.println("Ingresa el monto de la conversión");
+                    monto = teclado.nextInt();
+                    driver.agregarConversion(monedaBase,monedaObjetivo,monto);
+                }
+                System.out.println("Desea realizar otra conversion? 1=si 0=no");
+                if(teclado.nextInt() == 0){
+                    System.out.println("Este es el historial de todas las conversiones hechas:");
+                    driver.mostrarListaConversiones();
                     break;
-                case 2:
-                    monedaBase = "MXN";
-                    monedaObjetivo = "USD";
-                    break;
-                case 3:
-                    monedaBase = "USD";
-                    monedaObjetivo = "BRL";
-                    break;
-                case 4:
-                    monedaBase = "BRL";
-                    monedaObjetivo = "USD";
-                    break;
-                case 5:
-                    monedaBase = "USD";
-                    monedaObjetivo = "COP";
-                    break;
-                case 6:
-                    monedaBase = "COP";
-                    monedaObjetivo = "USD";
-                    break;
-                case 7:
-                    monedaBase = "USD";
-                    monedaObjetivo = "ARS";
-                    break;
-                case 8:
-                    monedaBase = "ARS";
-                    monedaObjetivo = "USD";
-                    break;
-                case 9:
-                    monedaBase = "USD";
-                    monedaObjetivo = "CMF";
-                    break;
-                case 10:
-                    monedaBase = "CMF";
-                    monedaObjetivo = "USD";
-                    break;
-                default:
-                    System.out.println("Opcion invalida");
-                    flag = 0;
-            }
-            if(flag == 1){
-                System.out.println("Ingresa el monto de la conversión");
-                monto = teclado.nextInt();
-                driver.agregarConversion(monedaBase,monedaObjetivo,monto);
-            }
-            System.out.println("Desea realizar otra conversion? 1=si 0=no");
-            if(teclado.nextInt() == 0){
-                System.out.println("Este es el historial de todas las conversiones hechas:");
-                driver.mostrarListaConversiones();
+                }
+            }catch(InputMismatchException e){
+                System.out.println("Numero no valido "+e.getMessage());
+                break;
+            }catch(Exception e){
+                System.out.println(e.getMessage());
                 break;
             }
         }
